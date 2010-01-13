@@ -1,0 +1,19 @@
+<?php
+// ---------------------------------------------------------------
+// $Id: TEMPLATE_init.php.in,v 1.1 2010-01-13 10:47:16 eric Exp $
+// $Source: /home/cvsroot/anakeen/addons/template/TEMPLATE_init.php.in,v $
+// ---------------------------------------------------------------
+
+
+global $app_const;
+
+$app_const= array(
+		  "INIT" => "yes",
+		  "VERSION" => "@VERSION@-@RELEASE@"
+
+		  /*  "TEMPLATE_ARG"    =>array("val"=>"Template Land",
+					    "descr"=>N_("Name of the example"),
+					    "user"=>"N")*/
+		  );
+
+?>

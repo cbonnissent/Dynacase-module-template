@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<module name="freedom-template" disabled="no" version="@VERSION@" release="@RELEASE@">
+
+  <description>Template use to create freedom application.</description>
+
+  <requires>
+    <module name="freedom" version="2.14.1" comp="ge"/>
+  </requires>
+
+  <post-install>
+    <process command="programs/record_application TEMPLATE" />
+    <process command="programs/update_catalog" />
+  </post-install>
+
+  <post-upgrade>
+    <process command="programs/pre_migration TEMPLATE" />
+    <process command="programs/record_application TEMPLATE" />
+    <process command="programs/post_migration TEMPLATE" />
+    <process command="programs/update_catalog" />
+  </post-upgrade>
+  
+  <changelog>
+    <version number="0.1.0" date="2009-12-28">
+      <change title="My first application" />
+    </version>
+  </changelog>
+
+</module>

@@ -1,0 +1,30 @@
+# ============================================
+# $Id: Makefile.in,v 1.1 2010-01-13 10:47:16 eric Exp $
+# ============================================
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+utildir=@PUBRULE@
+pubdir = @prefix@
+srcdir = @srcdir@
+applib = FDL
+rootprefix=$(RPM_BUILD_ROOT)
+appname = @APPNAME@
+export pubdir utildir appname applib
+TAR = gtar
+GZIP_ENV = --best
+
+export targetdir PACKAGE
+
+SUBDIR= Families Actions Scripts Images
+
+include $(utildir)/PubRule
+
+TRANSODS = 
+DISTFILES += $(SUBDIR)  $(wildcard *.ods)\
+            $(wildcard *.in) \
+            VERSION RELEASE  \
+	    $(PACKAGE)_en.po $(PACKAGE)_fr.po 
+
+clean:
+	/bin/rm -f *.*~ config.* Makefile configure $(appname)_init.php info.xml $(PACKAGE)-*webinst
+	/bin/rm -fr autom4te.cache
