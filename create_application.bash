@@ -30,7 +30,7 @@ done
 echo $appname $module
 
 
-mkdir $dir
+mkdir -p $dir
 if [ $? != 0 ]; then
   echo cannot create dir $dir
   exit 1;
