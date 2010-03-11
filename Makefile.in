@@ -1,5 +1,5 @@
 # ============================================
-# $Id: Makefile.in,v 1.1 2010-01-13 10:47:16 eric Exp $
+# $Id: Makefile.in,v 1.2 2010-03-11 12:31:46 eric Exp $
 # ============================================
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
@@ -10,7 +10,7 @@ applib = FDL
 rootprefix=$(RPM_BUILD_ROOT)
 appname = @APPNAME@
 export pubdir utildir appname applib
-TAR = gtar
+TAR = tar
 GZIP_ENV = --best
 
 export targetdir PACKAGE

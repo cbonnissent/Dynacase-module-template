@@ -4,7 +4,7 @@
  * Convert OpenDocument Spreadsheet to csv (semicolon)
  *
  * @author Anakeen 2000 
- * @version $Id: fam2po.php,v 1.1 2010-02-12 11:18:06 eric Exp $
+ * @version $Id: fam2po.php,v 1.2 2010-03-11 12:31:46 eric Exp $
  * @license http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU Affero General Public License
  * @package FREEDOM
  * @subpackage 
@@ -151,8 +151,8 @@ if ($err == "") {
   if ($err=="") {
     if ($csvfile) {
       $n=file_put_contents($csvfile,$csv);
-      if ($n > 0) print sprintf(_("csv file <%s> wroted")."\n",$csvfile);
-      else $err=sprintf(_("cannot write  %s"),$csvfile);
+      //if ($n > 0) print sprintf(_("csv file <%s> wroted")."\n",$csvfile);
+      //else $err=sprintf(_("cannot write  %s"),$csvfile);
     } else print $csv;
   }
  }
