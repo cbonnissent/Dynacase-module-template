@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage="$0 -a <appname> -m <modulename> -i <output directory>"
+usage="$0 -a <appname> -m <modulename> -o <output directory>"
 
 appname=''
 module=''
@@ -50,7 +50,7 @@ mv TEMPLATE.app ${APPNAME}.app
 mv TEMPLATE_init.php.in ${APPNAME}_init.php.in
 mv TEMPLATE_en.po ${APPNAME}_en.po
 mv TEMPLATE_fr.po ${APPNAME}_fr.po
-find . -type d -name CVS -exec rm -fr {} \;
+find . -type d -name CVS -exec rm -fr {} \; 2>/dev/null
 rm -f create_application.bash
 
 sed -i -e"s/freedom-template/$module/" configure.in
