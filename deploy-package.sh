@@ -96,16 +96,10 @@ deploy_webinst(){
 	echo "grepstatus=$grepstatus"
 	if [ $grepstatus -eq 0 ]; then
 		echo "$installedmodule detected. UPGRADE with $1"
-                sudo "$wiff_dir_path/wiff" context "$target_context" module upgrade --force "$1" 2> /dev/null
-        else    
-                echo "$modulename not detected. INSTALLATION"
-                sudo "$wiff_dir_path/wiff" context "$target_context" module install --force "$1" 2> /dev/null
-        fi
-	if [ $? -eq 0 ]; then
+		sudo "$wiff_dir_path/wiff" context "$target_context" module upgrade --force "$1" 2> /dev/null
+	else
 		echo "$modulename not detected. INSTALLATION with $1"
 		sudo "$wiff_dir_path/wiff" context "$target_context" module install --force "$1" 2> /dev/null
-	else
-		sudo "$wiff_dir_path/wiff" context "$target_context" module upgrade --force "$1" 2> /dev/null
 	fi
 	
 	return $?
