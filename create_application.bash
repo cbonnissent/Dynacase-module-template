@@ -60,4 +60,3 @@ sed -i -e"s/TEMPLATE/$APPNAME/" ${APPNAME}.app
 sed -i -e"s/template/$appname/" ${APPNAME}.app
 sed -i -e"s/Template/$appname/" ${APPNAME}.app
 sed -i -e"s/TEMPLATE/$APPNAME/" info.xml.in
-sed -i -e"s/freedom-template/$module/" info.xml.in
