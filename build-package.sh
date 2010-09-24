@@ -110,6 +110,7 @@ if $makepo; then
 	for po in $TMP_DIR/*.po; do
 		nbpo=$(($nbpo+1))
 		cp $po $outputdir
+		cp $po $SCRIPT_PATH
 	done
 	
 	if [ $nbpo -gt 0 ]; then
@@ -118,6 +119,7 @@ if $makepo; then
 			for po in $outputdir/*.po; do
 				echo -e "\t$po"
 			done
+			echo -e "\tpo were copied in source dir:$SCRIPT_PATH
 		fi
 	else
 		echo "no po builded"
