@@ -1,19 +1,26 @@
 #!/bin/bash
 # V1.0
 
-usage="$0 [-c <config file>]"
+BLUE="\033[0;34m"
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+BLACK="\033[0;00m"
+
+usage="$0 [-c <config file>] [-p Y|N] [-q (0|1|2)] [-w] [-y]\ndefaults is -c \`pwd\`/deploy-package.config -p Y -q 0"
 
 SCRIPT_PATH=`readlink -f $(dirname $0)`
 TMP_DIR=`mktemp -d`
 WRITE_CONFIG=false
 
+waitOnExit=false
 quiet=0
+forceyes=false
+errors=false
 seems_valid_wiff_dir=false
 seems_valid_context=false
+makepo="N"
 
-echo_2() { if [ $quiet -lt 2 ]; then echo $1; fi;}
-
-echo_1() { if [ $quiet -lt 1 ]; then echo $1; fi;}
+echo_2() { if [ $quiet -lt 2 ]; then echo -e $1; fi;}
 
 validate_wiff_dir(){
 	if [ -z "$wiff_dir_path_input" ]; then
@@ -61,6 +68,21 @@ initcontexts(){
 	done
 }
 
+findcontext(){
+	if $forceyes; then
+		if [ -z $target_context ]; then
+			echo "there is no default context"
+		elif [ -z $defaultrang ]; then
+			echo "the default context ($target_context) is no more available"
+			askcontext
+		else
+			seems_valid_context=true
+		fi
+	else
+		askcontext
+	fi
+}
+
 askcontext(){
 	echo "--- Contextes disponibles ---"
 	for (( i = 0 ; i < ${#acontexts[@]} ; i++ )); do
@@ -85,33 +107,83 @@ askcontext(){
 	seems_valid_context=true
 }
 
+install_webinst(){
+	if [ -z $1 ]; then
+		return 1
+	fi
+	if [ -z $target_context ]; then
+		return 1
+	fi
+	sudo "$wiff_dir_path/wiff" context "$target_context" module install --force "$1" 2> /dev/null
+	return $?
+}
+
+upgrade_webinst(){
+	if [ -z $1 ]; then
+		return 1
+	fi
+	if [ -z $target_context ]; then
+		return 1
+	fi
+	sudo "$wiff_dir_path/wiff" context "$target_context" module upgrade --force "$1" 2> /dev/null
+	return $?
+}
+
 deploy_webinst(){
 	if [ -z $1 ]; then
 		return 1
 	fi
 	basewebinst=$(basename $1 .webinst)
 	modulename=`expr match "$basewebinst" '^\(.*\)-[0-9][0-9.]*-[0-9][0-9]*$'`
-	installedmodule=`sudo "$wiff_dir_path/wiff" context "$target_context" module list installed | grep "$modulename"`
+	installedmodule=`sudo "$wiff_dir_path/wiff" context "$target_context" module list installed 2>/dev/null | grep "$modulename"`
 	grepstatus=$?
-	echo "grepstatus=$grepstatus"
 	if [ $grepstatus -eq 0 ]; then
-		echo "$installedmodule detected. UPGRADE with $1"
-		sudo "$wiff_dir_path/wiff" context "$target_context" module upgrade --force "$1" 2> /dev/null
+		echo -e "$installedmodule detected.\n\t$BLUE UPGRADE with $1 $BLACK"
+		upgrade_webinst "$1"
+	elif [ $grepstatus -eq 1 ]; then
+		echo -e "$modulename not detected.\n\t$BLUE INSTALLATION with $1 $BLACK"
+		install_webinst "$1"
 	else
-		echo "$modulename not detected. INSTALLATION with $1"
-		sudo "$wiff_dir_path/wiff" context "$target_context" module install --force "$1" 2> /dev/null
+		echo "an error occured when detecting if $modulename is installed. Installed modules are:"
+		sudo "$wiff_dir_path/wiff" context "$target_context" module list installed 2>/dev/null
+		errors=true
 	fi
 	
 	return $?
 }
 
-while getopts ":c:" opt; do
+while getopts ":c:p:q:wy" opt; do
 	case $opt in
 		c)
 			configfile=$OPTARG
 			;;
+		p)
+			if [ "$OPTARG" == "Y" ]; then
+				makepo="Y"
+			elif [ "$OPTARG" == "N" ]; then
+				makepo="N"
+			else
+				echo_2 "invalid value for -p ($OPTARG). The default will be used (N)"
+			fi
+			;;
+		q)
+			quiet=$OPTARG
+			;;
+		w)
+			waitOnExit=true
+			;;
+		y)
+			forceyes=true
+			;;
+		*)
+			echo "invalid option : -$opt $OPTARG"
+			echo -e $usage
+			exit 1
+			;;
 	esac
 done
+
+shopt -s nullglob
 
 if [ -z "$configfile" ]; then
 	configfile="$SCRIPT_PATH/deploy-package.config"
@@ -139,6 +211,17 @@ if [ -f $configfile ]; then
 	fi
 fi
 
+if $forceyes; then
+	if [ -z $wiff_dir_path ]; then
+		echo "there is no default wiff dir path"
+	else
+		wiff_dir_path_input=$wiff_dir_path
+		validate_wiff_dir
+		if ! $seems_valid_wiff_dir; then
+			echo "the default wiff dir path ($wiff_dir_path) is not valid"
+		fi
+	fi
+fi
 while ! $seems_valid_wiff_dir; do
 	read -e -p "please specify wiff directory path [$wiff_dir_path] " wiff_dir_path_input
 	if [ -z $wiff_dir_path_input ]; then
@@ -149,6 +232,9 @@ done
 
 initcontexts
 
+if ! $seems_valid_context; then
+	findcontext
+fi
 while ! $seems_valid_context; do
 	askcontext
 done
@@ -163,11 +249,24 @@ fi
 
 chmod 777 $TMP_DIR
 
-$SCRIPT_PATH/build-package.sh -o $TMP_DIR -q 2
-buildstatus=$?
-if [ $buildstatus -gt 0 ]; then
-	echo "an error occured in webinst generation"
-	exit $((buildstatus+1))
+if [ -f $SCRIPT_PATH/build-package.sh ]; then
+	if  [ -x $SCRIPT_PATH/build-package.sh ]; then
+		$SCRIPT_PATH/build-package.sh -o $TMP_DIR -q 2 -p $makepo
+		buildstatus=$?
+		if [ $buildstatus -gt 0 ]; then
+			echo "an error occured in webinst generation"
+			rm -rf $TMP_DIR
+			exit $((buildstatus+1))
+		fi
+	else
+		echo "$SCRIPT_PATH/build-package.sh is not executable"
+		rm -rf $TMP_DIR
+		exit 1
+	fi
+else
+	echo "$SCRIPT_PATH/build-package.sh does not exists"
+	rm -rf $TMP_DIR
+	exit 1
 fi
 
 for webinst in $TMP_DIR/*.webinst; do
@@ -176,7 +275,29 @@ done
 
 deploystatus=$?
 if [ $deploystatus -gt 0 ]; then
-        echo "an error occured in webinst deployment"
-        exit $((deploystatus+1))
+	echo "an error occured in webinst deployment"
+	errors=true
+else
+	rm -rf $TMP_DIR
+	rmstatus=$?
+	if [ $rmstatus -gt 0 ]; then
+		echo "an error occured when deleting $TMP_DIR"
+		errors=true
+	fi
 fi
 
+if $errors; then
+	echo -e "$RED The script ended with errors.$BLACK"
+else
+	echo_2 "$GREEN the script ended with success.$BLACK"
+fi
+
+if $waitOnExit; then
+	read -p "press enter to exit" exitkey
+fi
+
+if $errors; then
+	exit 1
+else
+	exit 0
+fi
