@@ -119,7 +119,7 @@ if $makepo; then
 			for po in $outputdir/*.po; do
 				echo -e "\t$po"
 			done
-			echo -e "\tpo were copied in source dir:$SCRIPT_PATH
+			echo -e "\tpo were copied in source dir:$SCRIPT_PATH"
 		fi
 	else
 		echo "no po builded"

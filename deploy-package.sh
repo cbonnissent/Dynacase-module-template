@@ -70,9 +70,9 @@ initcontexts(){
 
 findcontext(){
 	if $forceyes; then
-		if [ -z $target_context ]; then
+		if [ -z "$target_context" ]; then
 			echo "there is no default context"
-		elif [ -z $defaultrang ]; then
+		elif [ -z "$defaultrang" ]; then
 			echo "the default context ($target_context) is no more available"
 			askcontext
 		else
@@ -86,7 +86,7 @@ findcontext(){
 askcontext(){
 	echo "--- Contextes disponibles ---"
 	for (( i = 0 ; i < ${#acontexts[@]} ; i++ )); do
-		if [ -z $defaultrang ]; then
+		if [ -z "$defaultrang" ]; then
 			thisisdefault=''
 		elif [ $i -eq $defaultrang ]; then
 			thisisdefault="\t<-- default value"
@@ -96,7 +96,7 @@ askcontext(){
 		echo -e "\t[$i] ${acontexts[$i]}$thisisdefault"
 	done
 	read -e -p "Dans quel contexte souhaitez-vous publier? [$defaultrang] " rangcontext_input
-	if [ -z $rangcontext_input ]; then
+	if [ -z "$rangcontext_input" ]; then
 		rangcontext_input=$defaultrang
 	fi
 	if [ $rangcontext_input -gt ${#acontexts[@]} ]; then
@@ -108,10 +108,10 @@ askcontext(){
 }
 
 install_webinst(){
-	if [ -z $1 ]; then
+	if [ -z "$1" ]; then
 		return 1
 	fi
-	if [ -z $target_context ]; then
+	if [ -z "$target_context" ]; then
 		return 1
 	fi
 	sudo "$wiff_dir_path/wiff" context "$target_context" module install --force "$1" 2> /dev/null
@@ -119,10 +119,10 @@ install_webinst(){
 }
 
 upgrade_webinst(){
-	if [ -z $1 ]; then
+	if [ -z "$1" ]; then
 		return 1
 	fi
-	if [ -z $target_context ]; then
+	if [ -z "$target_context" ]; then
 		return 1
 	fi
 	sudo "$wiff_dir_path/wiff" context "$target_context" module upgrade --force "$1" 2> /dev/null
@@ -130,7 +130,7 @@ upgrade_webinst(){
 }
 
 deploy_webinst(){
-	if [ -z $1 ]; then
+	if [ -z "$1" ]; then
 		return 1
 	fi
 	basewebinst=$(basename $1 .webinst)
@@ -212,7 +212,7 @@ if [ -f $configfile ]; then
 fi
 
 if $forceyes; then
-	if [ -z $wiff_dir_path ]; then
+	if [ -z "$wiff_dir_path" ]; then
 		echo "there is no default wiff dir path"
 	else
 		wiff_dir_path_input=$wiff_dir_path
@@ -224,7 +224,7 @@ if $forceyes; then
 fi
 while ! $seems_valid_wiff_dir; do
 	read -e -p "please specify wiff directory path [$wiff_dir_path] " wiff_dir_path_input
-	if [ -z $wiff_dir_path_input ]; then
+	if [ -z "$wiff_dir_path_input" ]; then
 		wiff_dir_path_input=$wiff_dir_path
 	fi
 	validate_wiff_dir
