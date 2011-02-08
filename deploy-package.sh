@@ -135,6 +135,10 @@ deploy_webinst(){
 	fi
 	basewebinst=$(basename $1 .webinst)
 	modulename=`expr match "$basewebinst" '^\(.*\)-[0-9][0-9.]*-[0-9][0-9]*$'`
+	if [ -z $modulename ]; then
+		modulename=`expr match "$basewebinst" '^\(.*\)-[0-9][0-9.]*'`
+	fi
+	echo "searching if $modulename is installed (from $basewebinst)"
 	installedmodule=`sudo "$wiff_dir_path/wiff" context "$target_context" module list installed 2>/dev/null | grep "$modulename"`
 	grepstatus=$?
 	if [ $grepstatus -eq 0 ]; then
