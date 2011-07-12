@@ -4,16 +4,16 @@
 // $Source: /home/cvsroot/anakeen/addons/template/TEMPLATE_init.php.in,v $
 // ---------------------------------------------------------------
 
-
 global $app_const;
 
-$app_const= array(
-		  "INIT" => "yes",
-		  "VERSION" => "@VERSION@-@RELEASE@"
-
-		  /*  "TEMPLATE_ARG"    =>array("val"=>"Template Land",
-					    "descr"=>N_("Name of the example"),
-					    "user"=>"N")*/
-		  );
+$app_const = array(
+    "INIT" => "yes",
+    "VERSION" => "@VERSION@-@RELEASE@",
+    /*"TEMPLATE_ARG" => array(
+        "val" => "Template Land",
+        "descr" => N_("Name of the example"),
+        "user" => "N"
+    )*/
+);
 
 ?>
