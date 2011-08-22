@@ -11,6 +11,7 @@ pages_fdl = $(patsubst %.php,$(pubdir)/$(applib)/%.php,$(wildcard Method*.php))
 pages_fdl += $(patsubst %.php,$(pubdir)/$(applib)/%.php,$(wildcard Class*.php))
 
 pages_csv = $(patsubst %.csv,$(pubdir)/$(style)/$(appname)/%.csv,$(filter-out $(pages_not_csv),$(wildcard *.csv)))
+pages_xml = $(patsubst %.xml,$(pubdir)/$(style)/$(appname)/%.xml,$(filter-out $(pages_not_xml),$(wildcard *.xml)))
 
 $(pubdir)/$(applib):
 	mkdir $@
@@ -22,4 +23,7 @@ $(pubdir)/$(applib)/%.php: %.php $(pubdir)/$(applib)
 $(pubdir)/$(style)/$(appname)/%.csv : %.csv $(pubdir)/$(style)/$(appname)
 	$(installcp) $< $@
 
-publish: $(pubdir)/$(applib) $(pages_fdl) $(pages_csv)
+$(pubdir)/$(style)/$(appname)/%.xml : %.xml $(pubdir)/$(style)/$(appname)
+	$(installcp) $< $@
+
+publish: $(pubdir)/$(applib) $(pages_fdl) $(pages_csv) $(pages_xml)
