@@ -7,8 +7,7 @@ SUBDIR= Views Externals
 
 include $(utildir)/PubRule
 
-pages_fdl = $(patsubst %.php,$(pubdir)/$(applib)/%.php,$(wildcard Method*.php))
-pages_fdl += $(patsubst %.php,$(pubdir)/$(applib)/%.php,$(wildcard Class*.php))
+pages_fdl = $(patsubst %.php,$(pubdir)/$(applib)/%.php,$(wildcard *.php))
 
 pages_csv = $(patsubst %.csv,$(pubdir)/$(style)/$(appname)/%.csv,$(filter-out $(pages_not_csv),$(wildcard *.csv)))
 pages_xml = $(patsubst %.xml,$(pubdir)/$(style)/$(appname)/%.xml,$(filter-out $(pages_not_xml),$(wildcard *.xml)))
