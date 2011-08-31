@@ -5,19 +5,23 @@ from string import Template
 import sys
 
 if len(sys.argv) < 2:
-    print "add family logical name"
-else:
-    templateCSVContent = Template(open("templateWorkflow.csv", "r").read())
-    templatePHPContent = Template(open("templateWorkflow.php", "r").read())
-    familyName = "WFL_"+sys.argv[1].upper()
+	familyName = raw_input("Give me your logical Name : ")
+else :
+	familyName = sys.argv[1]
 
-    csv = templateCSVContent.safe_substitute(familyName=familyName)
-    php = templatePHPContent.safe_substitute(familyName=familyName)
-    
-    familyCSV = open("../WFL_"+familyName.lower()[4:]+".csv","w")
-    familyCSV.write(csv)
-    familyCSV.close()
-    
-    familyPHP = open("../Class."+familyName.lower()+".php","w")
-    familyPHP.write(php)
-    familyPHP.close()
+familyName = "WFL_"+familyName.upper()
+
+templateCSVContent = Template(open("templateWorkflow.csv", "r").read())
+templatePHPContent = Template(open("templateWorkflow.php", "r").read())
+
+
+csv = templateCSVContent.safe_substitute(familyName=familyName)
+php = templatePHPContent.safe_substitute(familyName=familyName)
+
+familyCSV = open("../WFL_"+familyName.lower()[4:]+".csv","w")
+familyCSV.write(csv)
+familyCSV.close()
+
+familyPHP = open("../Class."+familyName.lower()+".php","w")
+familyPHP.write(php)
+familyPHP.close()
