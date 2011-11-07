@@ -1,5 +1,4 @@
 <?php
-require_once "FDL/Class.WDoc.php";
 
 class $familyName extends WDoc
 {
