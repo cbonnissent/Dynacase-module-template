@@ -22,6 +22,6 @@ familyCSV = open("../WFL_"+familyName.lower()[4:]+".csv","w")
 familyCSV.write(csv)
 familyCSV.close()
 
-familyPHP = open("../Class."+familyName.lower()+".php","w")
+familyPHP = open("../Class."+familyName+".php","w")
 familyPHP.write(php)
 familyPHP.close()
