@@ -4,7 +4,7 @@
  *                      this part will be deleted when construct document class until end-method-ignore
  *
  */
-Class $familyName extends Doc
+Class _$familyName extends Doc
 {
     /**
      * @end-method-ignore
