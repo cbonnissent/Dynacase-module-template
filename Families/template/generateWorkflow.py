@@ -25,3 +25,12 @@ familyCSV.close()
 familyPHP = open("../Class."+familyName+".php","w")
 familyPHP.write(php)
 familyPHP.close()
+
+
+importStr = """
+<process command="./wsh.php --api=importDocuments --file=./@APPNAME@/WFL_$familyFileName.csv">
+    <label lang="en">importing WFL_$familyName.csv</label>
+</process>
+"""
+
+print Template(importStr).safe_substitute(familyName=familyName[4:], familyFileName=familyName.lower()[4:])
