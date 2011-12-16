@@ -12,7 +12,7 @@ def callback ( args, directory, files ) :
     print 'Scanning',directory
     for fileName in files:
         if os.path.isfile( os.path.join(directory,fileName) ) :
-            if (string.lower(os.path.splitext(fileName)[1]) in ['.csv']) and (fileName[:3] in ["FAM"]) :
+            if (string.lower(os.path.splitext(fileName)[1]) in ['.csv']) and (fileName[:6] == "STRUCT") :
                 extractAttr(directory,fileName)
 
 def extractAttr(directory, fileName):
@@ -22,7 +22,7 @@ def extractAttr(directory, fileName):
                 currentLine = currentLine.split(";")
                 if currentLine[0] == "ATTR":
                         attributes.append(currentLine[1])
-        methodFileName = os.path.join(directory,"Method."+os.path.splitext(fileName)[0][4:]+".php")
+        methodFileName = os.path.join(directory,"Method."+os.path.splitext(fileName)[0][7:]+".php")
         if os.path.isfile(methodFileName):
                 methodPhp = codecs.open(methodFileName, 'r', 'utf8')
                 methodContent = []
