@@ -36,11 +36,11 @@ familyPHP.write(php)
 familyPHP.close()
 
 importStr = """
-<process command="./wsh.php --api=importDocuments --file=./@APPNAME@/PARAM_$familyFileName.csv">
-    <label lang="en">importing PARAM_$familyName.csv</label>
-</process>
 <process command="./wsh.php --api=importDocuments --file=./@APPNAME@/STRUCT_$familyFileName.csv">
     <label lang="en">importing STRUCT_$familyName.csv</label>
+</process>
+<process command="./wsh.php --api=importDocuments --file=./@APPNAME@/PARAM_$familyFileName.csv">
+    <label lang="en">importing PARAM_$familyName.csv</label>
 </process>
 """
 
