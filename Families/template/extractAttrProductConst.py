@@ -22,6 +22,8 @@ def extractAttr(directory, fileName):
                 currentLine = currentLine.split(";")
                 if currentLine[0] == "ATTR":
                         attributes.append(currentLine[1])
+                if currentLine[0] == "PARAM":
+                        attributes.append(currentLine[1])
         methodFileName = os.path.join(directory,"Method."+os.path.splitext(fileName)[0][7:]+".php")
         if os.path.isfile(methodFileName):
                 methodPhp = codecs.open(methodFileName, 'r', 'utf8')
