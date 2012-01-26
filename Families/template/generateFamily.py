@@ -11,9 +11,9 @@ else :
 
 familyName = familyName.upper()
 
-templateCSVStruct = Template(open("templateFamilyStruct.csv", "r").read())
-templateCSVParam = Template(open("templateFamilyParam.csv", "r").read())
-templatePHPContent = Template(open("templateFamily.php", "r").read())
+templateCSVStruct = Template(open("STRUCT_family.csv.template", "r").read())
+templateCSVParam = Template(open("PARAM_family.csv.template", "r").read())
+templatePHPContent = Template(open("Method.family.php.template", "r").read())
 
 familyIcon =familyName.lower()+".png"
 familyMethod = "Method."+familyName.lower()+".php"

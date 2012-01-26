@@ -11,8 +11,8 @@ else :
 
 familyName = "WFL_"+familyName.upper()
 
-templateCSVContent = Template(open("templateWorkflow.csv", "r").read())
-templatePHPContent = Template(open("templateWorkflow.php", "r").read())
+templateCSVContent = Template(open("WFL_workflow.csv.template", "r").read())
+templatePHPContent = Template(open("Class.workflow.php.template", "r").read())
 
 
 csv = templateCSVContent.safe_substitute(familyName=familyName)
