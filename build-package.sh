@@ -64,6 +64,9 @@ if [ ! -w "$outputdir" ]; then
 fi
 
 tar -C $SCRIPT_PATH -cf - . | tar -C $TMP_DIR -xf -
+if [ -f "$SCRIPT_PATH/info.xml.in.dev" ]; then
+	cp -f "$SCRIPT_PATH/info.xml.in.dev" "$TMP_DIR/info.xml.in"
+fi
 cd $TMP_DIR
 
 LOG_FILE="$outputdir/$(basename $0 .sh)-$(date +%Y%m%d).log"
