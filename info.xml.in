@@ -2,7 +2,7 @@
 <module name="@PACKAGE@" disabled="no" version="@VERSION@"
     release="@RELEASE@">
 
-    <description>Template use to create dynacase application.
+    <description>$APPNAME use to create dynacase application.
     </description>
 
     <requires>
@@ -10,14 +10,14 @@
     </requires>
 
     <post-install>
-        <process command="programs/record_application TEMPLATE" />
+        <process command="programs/record_application $APPNAME" />
         <process command="programs/update_catalog" />
     </post-install>
 
     <post-upgrade>
-        <process command="programs/pre_migration TEMPLATE" />
-        <process command="programs/record_application TEMPLATE" />
-        <process command="programs/post_migration TEMPLATE" />
+        <process command="programs/pre_migration $APPNAME" />
+        <process command="programs/record_application $APPNAME" />
+        <process command="programs/post_migration $APPNAME" />
         <process command="programs/update_catalog" />
     </post-upgrade>
 
