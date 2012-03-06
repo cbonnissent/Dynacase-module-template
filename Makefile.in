@@ -5,7 +5,6 @@ pubdir = @prefix@
 srcdir = @srcdir@
 applib = FDL
 appname = @APPNAME@
-export
 TAR = tar
 GZIP_ENV = --best
 
