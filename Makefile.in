@@ -17,6 +17,5 @@ include $(utildir)/PubRule
 TRANSCSV +=
 
 clean:
-	/bin/rm -f *.*~ config.* Makefile configure \
-	$(appname)_init.php info.xml $(PACKAGE)-*webinst
+	/bin/rm -f *.*~ config.* Makefile configure $(appname)_init.php info.xml $(PACKAGE)-*webinst
 	/bin/rm -fr autom4te.cache
