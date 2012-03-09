@@ -17,7 +17,7 @@ VERSION=`cat VERSION`
 AC_SUBST(RELEASE)
 RELEASE=`cat RELEASE`
 AC_SUBST(PACKAGE)
-PACKAGE=$module
+PACKAGE=$modulename
 AC_SUBST(APPNAME)
 APPNAME=$APPNAME
 ac_default_prefix=/var/www/dynacase/dynacase
