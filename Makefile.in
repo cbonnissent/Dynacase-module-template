@@ -14,6 +14,8 @@ SUBDIR= Apps Families Actions Scripts Images
 
 include $(utildir)/PubRule
 
+# For all families traduction
+# TRANSCSV += $(shell find ./Families -name "STRUCT_*.csv")
 TRANSCSV +=
 
 clean:
