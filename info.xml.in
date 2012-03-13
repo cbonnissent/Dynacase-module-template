@@ -6,7 +6,7 @@
     </description>
 
     <requires>
-        <module name="freedom" version="3.0" comp="ge" />
+        <module comp='ge' version='3.1' name='dynacase-platform'/>
     </requires>
 
     <post-install>
