@@ -23,14 +23,17 @@ def parseOptions():
     argParser = argparse.ArgumentParser(
         description='create a new module with a single application'
     )
-    argParser.add_argument('moduleName',
-        help = 'module name')
+    argParser.add_argument('-m', '--moduleName',
+        help = 'module name',
+        dest = 'moduleName',
+        required = True,
+        )
     argParser.add_argument('-a', '--app',
         help = 'Application name',
         dest = 'appName',
         required = True)
     argParser.add_argument('outputDir',
-        help = 'target Directory')
+        help = 'target Directory (preferably empty directory)')
     argParser.add_argument('-c', '--childof',
         help = 'parent Application',
         dest = 'childOf',
