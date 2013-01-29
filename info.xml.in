@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
-<module name="@PACKAGE@" disabled="no" version="@VERSION@"
-    release="@RELEASE@">
+<module name="@PACKAGE@" disabled="no" version="@VERSION@" release="@RELEASE@">
 
-    <description>$APPNAME use to create dynacase application.
-    </description>
+    <description>@PACKAGE@</description>
 
     <requires>
-        <module comp='ge' version='3.1' name='dynacase-platform'/>
+        <module comp='ge' version='3.2' name='dynacase-core'/>
     </requires>
 
     <post-install>
@@ -20,11 +18,5 @@
         <process command="programs/post_migration $APPNAME" />
         <process command="programs/update_catalog" />
     </post-upgrade>
-
-    <changelog>
-        <version number="0.1.0" date="2009-12-28">
-            <change title="My first application" />
-        </version>
-    </changelog>
 
 </module>
