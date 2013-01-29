@@ -17,10 +17,6 @@ Getting Help
 Please consider following the [@anakeen Twitter](http://www.twitter.com/anakeen)
 for news.
 
-### Blog
-
-The Anakeen corporate blog is [Blog](http://anakeen.com/category/blog/nouvelles) (in french). 
-
 ### Commercial Support, Licensing
 
 If you want information go to [Anakeen](http://anakeen.com)
