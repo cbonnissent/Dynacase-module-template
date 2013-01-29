@@ -14,8 +14,8 @@ Class po2js {
     }
     public function parseEntry(&$out) {
         $out = preg_replace(
-			"/(?m)\[BLOCK\s*([^\]]*)\](.*?)\[ENDBLOCK\s*\\1\]/se", 
-			"\$this->memoEntry('\\1','\\2')",
+            "/(?m)\[BLOCK\s*([^\]]*)\](.*?)\[ENDBLOCK\s*\\1\]/se",
+            "\$this->memoEntry('\\1','\\2')",
         $out);
     }
     public static function trimquote($s) {
@@ -60,7 +60,7 @@ Class po2js {
         if ($this->encoding=="iso") $js=utf8_encode($js);
         return $js;
         } else return "";
-       
+
     }
 }
 
