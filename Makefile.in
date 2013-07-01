@@ -5,14 +5,16 @@ pubdir = @prefix@
 srcdir = @srcdir@
 applib = FDL
 appname = @APPNAME@
+localBuildRule = @LOCAL_BUILD_RULE@
 TAR = tar
 GZIP_ENV = --best
 
-export pubdir utildir appname applib PACKAGE
+export pubdir utildir appname applib PACKAGE localBuildRule
 
-SUBDIR= Apps Families Actions Scripts Images
+SUBDIR= API EXTERNALS locale STYLE $APPNAME
 
 include $(utildir)/PubRule
+include $(localBuildRule)/localBuildRule
 
 # For all families traduction
 # TRANSCSV += $(shell find ./Families -name "STRUCT_*.csv")

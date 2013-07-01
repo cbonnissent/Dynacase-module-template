@@ -49,16 +49,10 @@ def parseOptions():
 
 def createModule(moduleName, appName, outputDir, childOf='', ignoreList=[], appShortName=''):
 
-
-
-    toMoveFiles = [
-        ('APP_en.po', '%s_en.po'%(appName.upper())),
-        ('APP_fr.po', '%s_fr.po'%(appName.upper()))
-    ]
-
     toParseFiles = [
         'configure.in',
-        'info.xml.in'
+        'info.xml.in',
+        'Makefile.in'
     ]
 
     # create tmp dir
@@ -69,12 +63,6 @@ def createModule(moduleName, appName, outputDir, childOf='', ignoreList=[], appS
     #print "ignoring '%s'"%("', '".join(ignoreList))
     ignore = shutil.ignore_patterns(*ignoreList)
     copytree(os.path.dirname(__file__), tempDir, symlinks=False, ignore=ignore)
-    # rename files in tmp dir
-    for (fromFilePath, toFilePath) in toMoveFiles:
-        fromFileFullPath = os.path.join(tempDir, fromFilePath)
-        toFileFullPath = os.path.join(tempDir,toFilePath)
-        #print "move %s to %s"%(fromFileFullPath, toFileFullPath)
-        shutil.move(fromFileFullPath, toFileFullPath)
     # parse files in tmp dir
     for parsedFilePath in toParseFiles:
         parsedFileFullPath = os.path.join(tempDir, parsedFilePath)
@@ -86,7 +74,7 @@ def createModule(moduleName, appName, outputDir, childOf='', ignoreList=[], appS
             'modulename': moduleName
         }).rstrip() #strip to remove EOL duplication
 
-    addApplication(appName, childOf=childOf, appShortName=appShortName, targetDir=os.path.join(tempDir, 'Apps'))
+    addApplication(appName, childOf=childOf, appShortName=appShortName, targetDir=tempDir)
 
     # move tmp dir to target dir
     copytree(tempDir, outputDir)

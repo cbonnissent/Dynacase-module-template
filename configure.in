@@ -37,4 +37,7 @@ for file in `find . \( -name '*.in' -a -not -name configure.in \) -print`; do
     AC_CONFIG_FILES(${file%.in})
 done
 
+AC_SUBST(LOCAL_BUILD_RULE)
+LOCAL_BUILD_RULE="$(pwd)"
+
 AC_OUTPUT
